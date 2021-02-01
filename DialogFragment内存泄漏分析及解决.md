@@ -1,0 +1,15 @@
+# DialogFragment内存泄漏分析及解决
+
+# 内存泄漏的原因
+
+与OnDismisslistener为例
+
+DialogFragment实现了该接口，在DialogFragment的onActivityCreated里传给了Dialog，Dialog将它包在Message里，Message
+
+Message->OnDismissListener->DialogFragment
+
+原因应该是Message可能没法立即被处理，导致DialogFragment的引用一直没法回收吧？！NO！
+
+dismiss的时候拷贝的DismissMessage通过Handler，转到looper处理并清空了引用，但原DimissMessage还保留着
+
+dismiss，创建了Message，发送->被处理，Message内DialogFragment的引用被清除
