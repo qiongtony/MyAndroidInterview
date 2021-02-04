@@ -38,3 +38,20 @@ Activity同理
   Bitmap加载方式：选用RGB_565，4.7+使用ARGB_4444
 
 - 列表加载问题
+
+RequestOptions和Glide.ovveride这样的方式是一样的吗？
+
+是一样的，传入options会批量的去改
+
+返回的文件类型没办法在options里设置
+
+asBitmap/asFile，进行分类
+
+url设置不了- -
+
+listener可以在这设吗？不可以
+
+改为用options后：简化了选项的
+
+想处理的应该是把url的重复放到同一个地方，没办法自定义设置RequestManager= 。=
+
