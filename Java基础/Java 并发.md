@@ -107,7 +107,7 @@ Happens-Before规则（针对的是可见性）
 
    可同时绑定多个Condition对象
 
-线程之间写作：
+线程之间协作：
 
 Thread内join：在b内调用a.join，保证a执行先于b后面的执行。**无需在同步方法/同步控制块中**
 
@@ -115,7 +115,7 @@ Object内：wait、notify、notifyAll
 
 wait线程释放锁被挂起，等到其他线程调用notify/notifyAll才会被唤醒
 
-特点：必须在加锁内部使用（同步方法/同步控制块），否则会报**运行时IllegalMonitorStateException**
+特点：必须在内部锁使用（同步方法/同步控制块），否则会报**运行时IllegalMonitorStateException**
 
 为什么要释放锁：针对notify，必须在相同锁下，为了避免死锁必须先释放锁
 
@@ -151,9 +151,7 @@ public class JoinDemo {
     }
 
     private static class B extends Thread{
-
         private A a;
-
         public B(A a){
             this.a = a;
         }
@@ -177,6 +175,10 @@ wait()和sleep()的区别：
 - wait是Object的方法，sleep是Thread的静态方法
 
 - wait会释放锁，sleep不会
+
+改变wait(time)无法区分超时唤醒以及notify唤醒的区别
+
+改为使用lock.awaitUtil(timeOut)和lock.singalAll->awaitUntil(time)有返回值，超时导致等待结束返回false
 
 ## 线程安全的实现方法
 1. 互斥同步
