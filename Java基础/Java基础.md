@@ -103,3 +103,27 @@ FIFO
 - HashMap
 
 ![](https://www.yuque.com/flywith24/tree/about-me?inner=ud2dx)
+
+## equal和hashCode方法
+
+equal默认与“==”一致，一般重写用来表示值相等
+
+equal相等，hashCode一定也相等，反过来不一定
+
+hashCode一般用于hashMap/hashSet等的寻址，当hashCode相等时才判断equal是否一致，达到降低equal调用提高效率的效果
+
+equal的特性：
+
+1. 自反性：x.equals(x)//true
+2. 对称性：a.equals(b) == b.equals(a)
+3. 传递性
+4. 一致性：多次调用，结果一致
+5. 非null对象，equals(null)返回false
+
+
+
+## 参数传递
+
+Java的参数传递是值传递，不是引用传递，对于引用对象，传递的是对象的地址值
+
+> 引用和地址有啥区别
