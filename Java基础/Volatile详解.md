@@ -100,3 +100,64 @@ happens-before规则和禁止重排序
 
 happens-before规则中有一条volatile变量规则：对一个volatile域的写，happens-before于任意后续对这个volatile域的读
 
+## 缓存行
+
+内存往缓存读数据是按块读的，即为缓存行cache line（64字节），更新都是按块来的
+
+缓存行对齐：volatile的单独一行，不要多个放在同一行，不要多个线程的工作内存都更新的意思？
+
+缓存一致性协议：MESI
+
+缓存一致性协议：volatile能保证多线程的缓存保持一致
+
+CPU为了优化对指令进行乱序->如何禁止乱序执行
+
+volatile如何解决指令重排序？单例DCL问题（Double Check Lock）->new对象在CPU下不是一个指令
+
+```java
+1.new申请对象大小内存（半初始化）
+2.对象初始化
+3.将地址指向内存（栈引用->堆）    
+```
+
+解决是通过内存屏障吗？
+
+什么是内存屏障-》屏障两边的指令不可以重排
+
+源码：volatile
+
+字节码：ACC_VOLATILE
+
+JVM：读写前后加内存屏障
+
+具体虚拟机的具体实现：lock指令
+
+volatile在字节码的实现->加了个volatile的关键字-》JVM规范的要求
+
+分为四种：LoadLoad、StoreStore、LoadStore、StoreLoad
+
+```java
+L1
+LL
+L2
+L1和L2不能重排序    
+```
+
+JVM层面，volatile读写的要求：
+
+```
+StroeStoreBarrier
+volatile写（Store）
+StoreLoadBarrier
+（写按顺序，且写读不能重排序
+
+LoadLoadBarrier
+volatile读
+LoadStore
+（读按顺序，且读写不能重排序）
+```
+
+
+
+JVM内存屏障的实现
+
