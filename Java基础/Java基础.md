@@ -103,3 +103,32 @@ FIFO
 - HashMap
 
 ![](https://www.yuque.com/flywith24/tree/about-me?inner=ud2dx)
+
+## 一些问题
+
+**1、谈谈对Java平台的理解**
+
+1. 面向对象（封装、继承、多态）
+2. 平台无关性（字节码与JVM）tip：JVM不是解释执行的，有一些如HotSpot是JIT编译执行
+3. 语言特性（泛型、Lambda）
+4. 类库（集合、并发、网络、IO和NIO）
+5. 内存回收
+
+### 2、Exception和Error的区别，throws和throw的区别
+
+Exception一般可以用来捕获，其中又分为可检查异常和不可检查异常
+
+可检查异常：没有继承自RuntimeException的异常，如FileNotFoundException，在代码里必须显示地捕获处理，在编译器就能发现
+
+不可检查异常：继承自RuntimeException的异常，很明显在运行时才能发现，如：NullPointerException，可以通过良好编码避免
+
+Error：在正常情况下，不大可能出现的情况，绝大部分的Error都会导致程序处于非正常状态，所以一般不需要捕获或者说捕获也没法解决
+
+throws：可能抛出的异常
+
+throw：抛出异常
+
+NoClassDefFoundError和ClassNotFoundException的区别
+
+- 前者是Error，不应该捕获，后者是异常，一般可以捕获处理
+- 前者是指编译时该类存在，在加载时却找不到该类的情况；后者一般是指在通过反射获取类时，类名书写错误导致的
