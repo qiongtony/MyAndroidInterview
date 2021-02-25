@@ -243,12 +243,13 @@ synchronized的注意点：
 	  
 	  存在的问题：ABA问题
      
+
   为了解决AtmoicInteger的问题：初始是A，其他线程改为了B，然后再改回A，此时会认为没有改动过
      
   如何解决的，变量值带版本AtomicStampedReference（原因：通过值判断有没有改变不准确）
      
   底层实现：汇编的lock cmpxchg指令
-   
+
 
 ### 无同步方案
 

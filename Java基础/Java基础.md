@@ -104,6 +104,10 @@ FIFO
 
 ![](https://www.yuque.com/flywith24/tree/about-me?inner=ud2dx)
 
+- LinkedHashMap
+
+  存储访问顺序，根据优先级
+
 ## equal和hashCode方法
 
 equal默认与“==”一致，一般重写用来表示值相等

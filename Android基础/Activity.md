@@ -141,3 +141,10 @@ action->0个或一个
 category->0~N个（activity默认有DEFAULT的category，这样看应该是1~N？）
 
 data：Uri的相关数据，需要全部一致才算匹配
+
+Intent传输数据的大小限制：1M-4K（ProcessState类中定义)
+
+```c++
+#define BINDER_VM_SIZE ((1*1024*1024) - (4096 *2))
+```
+
