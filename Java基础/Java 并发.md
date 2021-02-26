@@ -52,7 +52,7 @@ Happens-Before规则（针对的是可见性）
 
 ### volatile
 
-作用：禁用缓存，可见性（写HB读）
+作用：禁用重排序，可见性（写HB读）
 
 ### synchornized
 
