@@ -62,5 +62,13 @@
 
   
 
-> AQS：同步器，
+> AQS：同步器（也叫做CLH）
+>
+> 实现：CAS+Volatile
 
+Node：
+
+- prev
+- next
+- Thread
+- waitStatus

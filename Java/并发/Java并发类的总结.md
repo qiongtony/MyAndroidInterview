@@ -3,7 +3,7 @@
 分类
 
 - 工具类
-- 集合类
+- 集合类（ConcurrentHashMap、CopyOnWriteArrayList）
 - 阻塞队列
 - 线程池
 
@@ -30,6 +30,7 @@ ReentrantLock与synchronized的区别
 - ReentrantLock支持多个Condition实现等待-唤醒，具体是await()、signal()/signalAll()方法；synchronized使用Object的wait()、Object的notify/notifyAll实现等待-唤醒；
 - ReentrantLock支持公平锁和非公平锁，默认为非公平锁，公平锁可以减少“饥饿”线程的出现；synchronized是非公平锁；
 
+<<<<<<< HEAD
 # 二、集合类
 
 1. ConcurrentHashMap
@@ -260,4 +261,18 @@ CAS+ReentrantLock+数组
 吞吐量：Linked比Array更好->锁操作更细粒度
 
 性能：Array比Linked好，实现比较简单
+=======
+## AQS
+
+AQS的核心：(CLH队列)
+
+state：
+
+- 抢占：state>0，重入锁的数量
+- 共享：
+
+为什么的实现是CAS+Volatile
+
+CAS入队、出队
+>>>>>>> 06d8ef86f4d3cd8d6264df483fc2894429d12d43
 
