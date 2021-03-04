@@ -93,6 +93,8 @@ UNSPECIFIED:
 
 最大的尺寸
 
+![](https://raw.githubusercontent.com/qiongtony/SavedPhoto/main/1614783752(1).png)
+
 自定义View，调用setMeasuredDimension设置View的measureWidth，measureHeight
 
 **ViewGroup的onMeasure**
