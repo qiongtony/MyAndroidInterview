@@ -57,6 +57,28 @@ NestedScrollView机制：
 
 ## 绘制流程
 
+前提：
+
+setContentView将xml布局生成对应的View；
+
+初次绘制：
+
+ActivityThread.handlerResumeActivity
+
+思路：
+
+开发者自定义View如何实现想要的控件呢？
+
+View的onMeasure、onLayout、onDraw三个方法
+
+onMesure又是在measure方法里执行的；
+
+onLayout在layout方法里调用
+
+onDraw在draw方法里调用
+
+最终的入口ViewRootImpl.setView(decorView, windowLayoutParam)，通过Choreographer来管理发起绘制请求，以及接收硬件的绘制回调，然后让具体的View执行绘制
+
 - measure
 - layout
 - draw
@@ -149,3 +171,27 @@ ViewGroup
 disaptchDraw->drawChild->View.draw
 
 onDraw:绘制自己的内容
+
+事件接收的入口：
+
+ViewRootImpl#ViewPostImeInputStage.processPointerEvent
+
+```mermaid
+sequenceDiagram
+	ViewPostImeInputStage ->> ViewPostImeInputStage : processPointerEvent
+	ViewPostImeInputStage ->> View : dispatchPointerEvent
+	View ->> DecorView : dispatchTouchEvent
+	DecorView ->> Window.Callback(Activity) : dispatchTouchEvent
+	Activity ->> PhoneWindow : superDispatchTouchEvent
+	PhoneWindow ->> DecorView : superDispatchTouchEvent
+	DecorView ->> FrameLayout : dispatchTouchEvent
+```
+
+1. ViewRootImpl收到事件
+2. 给View，即为DecorView
+3. DecorView给Activity（Window.callback）
+4. Activity给PhoneWindow
+5. PhoneWindow给DecorView
+
+转了一圈又回到了DecorView，这里只是为了让Activity/Dialog能够得到分发的机会，在View都不处理的情况下Activity的onTouchEvent可以做一些处理
+

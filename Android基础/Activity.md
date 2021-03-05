@@ -136,13 +136,19 @@ ViewModel
 
 如何找到对应的四大组件？
 
-action->0个或一个
+Intent的匹配规则
 
-category->0~N个（activity默认有DEFAULT的category，这样看应该是1~N？）
+action（必填）：一个
 
-data：Uri的相关数据，需要全部一致才算匹配
+category（非必填）：0~N个（activity默认有DEFAULT的category，这样看应该是1~N？）
 
-Intent传输数据的大小限制：1M-4K（ProcessState类中定义)
+data（非必填）：setData和setType是互斥的（但官方又提供了setDataAndType，但这种情况很少见）
+
+- Uri：有多少匹配多少，条件越少越宽松，如若**<data android:scheme = "http"/>**，那么任何**Intent.setData(Uri.parse('http://xxx'))**的都能匹配上
+- type：格式
+  - tips：如只指定了tyep，系统默认认为支持content和file数据，所以如果要在Intent中指定URI，务必配成**content://xxx**或**file://xxx**
+
+Intent传输数据的大小限制：1M-8K（ProcessState类中定义)
 
 ```c++
 #define BINDER_VM_SIZE ((1*1024*1024) - (4096 *2))
