@@ -1,0 +1,9 @@
+View.post为什么能获取宽高
+
+两种情况：
+
+attachInfo不为空，即为执行了onResume流程，往Handler插一条msg
+
+attachInfo为空，说明还没有执行onResume流程，往HandlerActionQueue里插入该条Runnable，等待任务的执行
+
+任务什么时候执行？onResume流程会通过WMG创建ViewRootImpl，VRI的构造方法会创建AttachInfo，WMG执行VRI的setVIew方法，在该方法里调用requestLayout，通过Choreographer向Native注册Vsync请求，native执行Vsync，Choreographer执行doFrame，最终会执行VRI的doTraversal，在里面调用view.dispatchAttachedToWindow(attchInfo)，将HandlerActionQueue里的任务插入到Hanlder的MQ里，然后执行View的measure、layout、draw，执行完处理MQ的消息，此时View的宽高已经测量好了
