@@ -175,3 +175,19 @@ Java的参数传递是值传递，不是引用传递，对于引用对象，传�
 多人贷款如何如何能够完成所有贷款（先尝试贷给你，还钱后其余贷款也能够完成就是成了，不行就是不能先贷给你）
 
 ![这里写图片描述](https://img-blog.csdn.net/20180508204335770?watermark/2/text/aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzMzNDE0Mjcx/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70)
+
+## finalize()
+
+是什么？Object内的一个方法
+
+作用：在GC收集对象前进行资源的回收
+
+为什么不建议用：
+
+GC时机不确定，需要释放的资源应该尽快释放；
+
+需要对该对象单独处理，影响GC性能
+
+### 更好的方式
+
+Cleaner：使用幻象引用监听对象的回收
