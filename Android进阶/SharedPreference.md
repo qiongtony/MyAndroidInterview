@@ -19,11 +19,11 @@ writeToDisk：更新sp文件
 
 为了保证线程安全，提供的三把锁：
 
-mLock
+mLock：初始化，从xml读取到内存，get要在此操作后
 
-mEditorLock
+mEditorLock：并发往map添加数据
 
-mWriteToDiskLock
+mWriteToDiskLock：将内存写到磁盘
 
 
 
@@ -84,7 +84,13 @@ commit方法：（子线程执行writeToFile，调用线程CountDownLatch.wait�
 
 
 
-apply卡顿的原因：提交的任务会被提交到QueuedWork的链表里，而Activity的onPause时或BroadcastReceiver.onReceive后，或者Service处理后都会调用QueuedWork.waitToFinish等待任务完成，so造成了主线程的ANR->怎么解决呢？第一种减少频繁的apply，第二种：应该可以在子线程执行commit，这样就没事了
+apply卡顿的原因：提交的任务会被提交到QueuedWork的链表里，而Activity的onPause时或BroadcastReceiver.onReceive后，或者Service处理后都会调用QueuedWork.waitToFinish等待任务完成，so造成了主线程的ANR->怎么解决呢？
+
+​	第一种减少频繁的apply
+
+​	第二种：应该可以在子线程执行commit，这样就没事了
+
+​	第三种（头条）：onPause前清空queueWork
 
 两者的区别：
 
@@ -127,3 +133,4 @@ JetPack的DataStore
 
 
 SP是通过ContextImpl.getSp获取的，那是不是ContextImpl只有一个实例，不然会创建无数的SP实例->不会缓存是全局的
+
